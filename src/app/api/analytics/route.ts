@@ -42,7 +42,7 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
     DONE: 0,
   };
 
-  statusGroup.forEach((g) => {
+  statusGroup.forEach((g: any) => {
     if (g.status in statuses) {
       statuses[g.status as keyof typeof statuses] = g._count._all;
     }
