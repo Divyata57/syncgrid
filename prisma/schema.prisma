@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String             @id @default(uuid())
+  email         String             @unique
+  password      String
+  name          String
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  organizations UserOrganization[]
+  createdTasks  Task[]             @relation("TaskCreator")
+  assignedTasks Task[]             @relation("TaskAssignee")
+  auditLogs     AuditLog[]
+}
+
+model Organization {
+  id        String             @id @default(uuid())
+  name      String
+  slug      String             @unique
+  notes     String             @default("")
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+  users     UserOrganization[]
+  tasks     Task[]
+  auditLogs AuditLog[]
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+model UserOrganization {
+  id             String       @id @default(uuid())
+  userId         String
+  organizationId String
+  role           Role         @default(MEMBER)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, organizationId])
+}
+
+model Task {
+  id             String       @id @default(uuid())
+  title          String
+  description    String?
+  status         String       @default("TODO") // "TODO", "IN_PROGRESS", "DONE"
+  priority       String       @default("MEDIUM") // "LOW", "MEDIUM", "HIGH"
+  dueDate        DateTime?
+  fileUrl        String?
+  fileName       String?
+  organizationId String
+  createdById    String
+  assignedToId   String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  creator        User         @relation("TaskCreator", fields: [createdById], references: [id], onDelete: Cascade)
+  assignee       User?        @relation("TaskAssignee", fields: [assignedToId], references: [id], onDelete: SetNull)
+}
+
+model AuditLog {
+  id             String        @id @default(uuid())
+  action         String // "USER_REGISTER", "USER_LOGIN", "TASK_CREATE", "TASK_UPDATE", "TASK_DELETE", "ROLE_CHANGE", "MEMBER_ADD"
+  details        String // JSON content or description
+  userId         String?
+  organizationId String?
+  createdAt      DateTime      @default(now())
+  user           User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}

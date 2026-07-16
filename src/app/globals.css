@@ -1,26 +1,78 @@
 @import "tailwindcss";
 
+@theme {
+  --color-background: #050506;
+  --color-foreground: #f4f4f5;
+  --color-card: #0a0a0c;
+  --color-card-border: #18181b;
+  --color-primary-red: #e11d48;
+  --color-accent-red: #ef4444;
+  --color-dark-red: #991b1b;
+  --font-sans: 'Outfit', sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #050506;
+  --foreground: #f4f4f5;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #050506;
+  color: #f4f4f5;
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Custom Scrollbar for Premium Look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #050506;
+}
+::-webkit-scrollbar-thumb {
+  background: #1f1f23;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #e11d48;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(10, 10, 12, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(225, 29, 72, 0.08);
+}
+
+.glass-panel-hover:hover {
+  border-color: rgba(225, 29, 72, 0.25);
+  box-shadow: 0 0 15px rgba(225, 29, 72, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Red Neon Glow Effects */
+.glow-red {
+  box-shadow: 0 0 20px rgba(225, 29, 72, 0.2);
+}
+
+.text-glow-red {
+  text-shadow: 0 0 8px rgba(225, 29, 72, 0.4);
+}
+
+.border-glow-red {
+  border-color: rgba(225, 29, 72, 0.3);
+  box-shadow: 0 0 10px rgba(225, 29, 72, 0.1);
+}
+
+/* Custom Shimmer/Pulse Animations */
+@keyframes redPulse {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.5; }
+}
+
+.animate-red-pulse {
+  animation: redPulse 3s infinite ease-in-out;
 }
