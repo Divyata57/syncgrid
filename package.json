@@ -8,7 +8,8 @@
     "dev:socket": "tsx src/socket-server.ts",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "node scripts/patch-next-cli.js"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
