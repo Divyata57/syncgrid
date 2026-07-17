@@ -12,8 +12,9 @@ const httpServer = createServer((req, res) => {
 
 const io = new Server(httpServer, {
   cors: {
-    origin: "*", // In production, specify Next.js client URL e.g. http://localhost:3000
+    origin: ["https://syncgrid-ql2v.onrender.com", "http://localhost:3000"],
     methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 
