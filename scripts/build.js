@@ -22,6 +22,15 @@ if (needInstall) {
   }
 }
 
+console.log('Generating Prisma Client...');
+try {
+  execSync('npx prisma generate', { stdio: 'inherit' });
+  console.log('Prisma Client generated successfully.');
+} catch (err) {
+  console.error('Failed to generate Prisma Client:', err);
+  process.exit(1);
+}
+
 console.log('Running next build...');
 try {
   // Run Next.js build using the locally installed package
