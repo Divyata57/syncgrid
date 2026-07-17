@@ -381,12 +381,6 @@ export default function WorkspaceLayout({
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <div className={`w-2 h-2 rounded-full ${connected ? 'bg-emerald-500' : 'bg-rose-500 animate-pulse'}`} />
-                <span className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">
-                  {connected ? 'Live Sync' : 'Offline'}
-                </span>
-              </div>
             </div>
           </header>
 
