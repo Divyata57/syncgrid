@@ -92,8 +92,14 @@ export default function WorkspaceLayout({
   useEffect(() => {
     if (!slug || loading) return;
 
-    // Connect to WebSocket server on port 3001
-    const socketClient = io("http://localhost:3001");
+    // Connect to WebSocket server: use local port 3001 in dev, default to host in prod
+    const socketUrl = typeof window !== "undefined" && window.location.hostname === "localhost"
+      ? "http://localhost:3001"
+      : undefined;
+
+    const socketClient = io(socketUrl, {
+      transports: ["websocket"],
+    });
 
     socketClient.on("connect", () => {
       console.log("WebSocket client connected");
