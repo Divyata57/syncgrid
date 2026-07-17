@@ -31,6 +31,20 @@ try {
   process.exit(1);
 }
 
+console.log('Synchronizing database schema (Prisma DB Push)...');
+try {
+  execSync('npx prisma db push', { stdio: 'inherit' });
+  console.log('Database synchronized successfully.');
+} catch (err) {
+  console.error('Failed to synchronize database schema:', err);
+  if (process.env.NODE_ENV === 'production' || process.env.RENDER) {
+    console.error('Production database sync failed, aborting build.');
+    process.exit(1);
+  } else {
+    console.log('Ignoring database sync failure in development environment.');
+  }
+}
+
 console.log('Running next build...');
 try {
   // Run Next.js build using the locally installed package
