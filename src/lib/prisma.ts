@@ -23,7 +23,22 @@ if (connectionString && connectionString.startsWith("prisma+postgres://")) {
   }
 }
 
-const pool = new Pool({ connectionString });
+// Log warning if DATABASE_URL points to localhost in production
+if (process.env.NODE_ENV === "production" && connectionString) {
+  try {
+    const isLocal = connectionString.includes("localhost") || connectionString.includes("127.0.0.1") || connectionString.includes("::1");
+    if (isLocal) {
+      console.error("====================================================================================================");
+      console.error("CRITICAL WARNING: DATABASE_URL points to localhost in production! Please configure your cloud database URL in the Render Environment settings.");
+      console.error("====================================================================================================");
+    }
+  } catch (e) {}
+}
+
+const pool = new Pool({
+  connectionString,
+  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : undefined,
+});
 const adapter = new PrismaPg(pool);
 
 export const prisma =
