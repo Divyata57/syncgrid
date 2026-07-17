@@ -189,7 +189,7 @@ export default function WorkspaceLayout({
           <div className="flex flex-col flex-1 min-h-0">
             
             {/* Logo */}
-            <div className="flex items-center gap-3 px-6 h-16 border-b border-zinc-900 justify-between">
+            <div className="flex items-center gap-3 px-6 h-16 border-b border-zinc-900">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-600 to-rose-900 flex items-center justify-center glow-red">
                   <ShieldCheck className="w-4 h-4 text-white" />
@@ -197,19 +197,6 @@ export default function WorkspaceLayout({
                 <span className="font-display font-bold tracking-tight text-white text-base">
                   SYNC<span className="text-red-500">GRID</span>
                 </span>
-              </div>
-
-              {/* WebSocket Status Indicator */}
-              <div className="flex items-center">
-                {connected ? (
-                  <span title="Connected to Real-Time Server">
-                    <Wifi className="w-3.5 h-3.5 text-emerald-500 animate-pulse" />
-                  </span>
-                ) : (
-                  <span title="Disconnected from Real-Time Server">
-                    <WifiOff className="w-3.5 h-3.5 text-zinc-650" />
-                  </span>
-                )}
               </div>
             </div>
 
