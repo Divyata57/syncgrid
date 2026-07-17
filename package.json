@@ -6,7 +6,7 @@
     "dev": "concurrently \"npm run dev:next\" \"npm run dev:socket\"",
     "dev:next": "next dev",
     "dev:socket": "tsx src/socket-server.ts",
-    "build": "next build",
+    "build": "node scripts/build.js",
     "start": "next start",
     "lint": "eslint",
     "postinstall": "node scripts/patch-next-cli.js"
