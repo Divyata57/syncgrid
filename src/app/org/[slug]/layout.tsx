@@ -92,10 +92,8 @@ export default function WorkspaceLayout({
   useEffect(() => {
     if (!slug || loading) return;
 
-    // Connect to WebSocket server: use local port 3001 in dev, default to host in prod
-    const socketUrl = typeof window !== "undefined" && window.location.hostname === "localhost"
-      ? "http://localhost:3001"
-      : undefined;
+    // Next.js automatically exposes variables prefixed with NEXT_PUBLIC_ to the browser
+    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 
     const socketClient = io(socketUrl, {
       transports: ["websocket"],
